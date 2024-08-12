@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import CurrencyRow from './CurrencyRow';
 
-// Use the API key in the URL
-const API_KEY = '06db99b53c6cf62716963e5a';
+// Environment Variable
+const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`;
+console.log("API Key:", API_KEY); // Should output the API key if set correctly
 
 function App() {
   const [currencyOptions, setCurrencyOptions] = useState([]);
@@ -28,7 +29,6 @@ function App() {
       .then(res => res.json())
       .then(data => {
         const firstCurrency = Object.keys(data.conversion_rates)[0];
-        // Assuming the data structure has a base_code and conversion_rates
         setCurrencyOptions([data.base_code, ...Object.keys(data.conversion_rates)]);
         setFromCurrency(data.base_code);
         setToCurrency(firstCurrency);
